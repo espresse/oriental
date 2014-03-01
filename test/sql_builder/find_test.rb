@@ -3,7 +3,6 @@ require File.expand_path '../../test_helper.rb', __FILE__
 include Rack::Test::Methods
 
 describe "FIND statement" do
-
   describe "FIND" do
     before do
       @reader = Oriental::Relation.new(OUser).find("#5:1")
