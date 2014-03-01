@@ -24,3 +24,4 @@ Oriental::Connection.connect(host: 'localhost', port: 2424, db: 'oriental-test',
 
 class OUser < Struct.new(:parameters)
 end
+
