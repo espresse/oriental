@@ -15,16 +15,16 @@ module Oriental
 
     def initialize(record = {})
       unless record.empty?
-        
-      record[:properties] = record.clone
-        
-      map = record.map do |k, v|
-        k = k.to_s[1..-1].to_sym if k.to_s[0] == "@"
-        k = :klass if k == :class
-        [k, v]
+        record[:properties] = record.clone
+          
+        map = record.map do |k, v|
+          k = k.to_s[1..-1].to_sym if k.to_s[0] == "@"
+          k = :klass if k == :class
+          [k, v]
+        end
+          
+        record = Hash[map]
       end
-        
-      record = Hash[map]
 
       super record
     end
