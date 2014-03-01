@@ -13,20 +13,22 @@ module Oriental
 
       fetch_data
 
-      data[:collection].each do |record|
-        res = parse_record(record)
+      if data[:collection]
+        data[:collection].each do |record|
+          res = parse_record(record)
 
-        name = res[:@class] || res[:class]
+          name = res[:@class] || res[:class]
 
-        constant = Object
-        constant = constant.const_defined?(name) ? constant.const_get(name) : constant.const_missing(name)
+          constant = Object
+          constant = constant.const_defined?(name) ? constant.const_get(name) : constant.const_missing(name)
 
-        block.call(constant.new(res))
+          block.call(constant.new(res))
+        end
       end
     end
 
     def command?
-      !(not @query_type or @query_type == 'select')
+      !(not @query_type or @query_type == 'SELECT')
     end
 
     private
@@ -34,9 +36,11 @@ module Oriental
     def fetch_data
       connection = Oriental::Connection.connect
 
-      action = command? ? :command : :query
-      @data = connection.database.send(action, sql, params, prefetch)
+      @data = command? ? connection.database.command(sql, params) : connection.database.query(sql, params, prefetch)
 
+      if data[:exceptions]
+        raise data[:exceptions].map {|exception| exception[:exception_message]}.join(', ')
+      end
       self
     end
 

@@ -1,6 +1,12 @@
 require_relative './sql_builder/where'
 require_relative './sql_builder/find'
 require_relative './sql_builder/let'
+require_relative './sql_builder/order'
+require_relative './sql_builder/group'
+require_relative './sql_builder/skip'
+require_relative './sql_builder/limit'
+require_relative './sql_builder/select'
+require_relative './sql_builder/insert'
 require_relative './sql_builder/query_types'
 
 module Oriental
@@ -17,6 +23,12 @@ module Oriental
         conditions: [],
         target: [],
         let: [],
+        order: [],
+        group: [],
+        limit: [],
+        skip: [],
+        fields: [],
+        set: [],
         params: {}
       }
       @collection = Oriental::Collection.new
@@ -41,13 +53,14 @@ module Oriental
       collection.sql = build_sql
       collection.params = criteria[:params]
       collection.prefetch = "*:0"
+      collection.query_type = query_type
       self
     end
 
     def build_sql
       result = ""
       query = self.send "#{query_type.downcase}_query"
-      result = query.shift[:query].gsub('?', criteria[:query].to_s).strip
+      result = query.shift[:query].gsub('?', criteria_query.to_s).strip
       query.each do |q|
         key, val = q.shift
         ckey = self.send("criteria_#{key}")
@@ -61,7 +74,7 @@ module Oriental
     end
 
     def sql_cleanup(sql)
-      sql.gsub(/"(?<rid>#?\d+:\d+)"/, '\k<rid>')
+      sql.gsub(/"(?<rid>#?-?\d+:\d+)"/, '\k<rid>')
     end
 
     def add_params(sql)

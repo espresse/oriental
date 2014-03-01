@@ -7,3 +7,4 @@ Oriental::Connection.connect(host: 'localhost', port: 2424, db: 'GratefulDeadCon
 
 class OUser < Struct.new(:parameters)
 end
+
