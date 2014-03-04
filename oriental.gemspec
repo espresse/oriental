@@ -26,5 +26,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "simplecov", '~> 0.8'
   spec.add_development_dependency "active_support", '~> 3.0'
   spec.add_development_dependency "rack-test", '~> 0.6'
+  spec.add_development_dependency "i18n", '~> 0.6'
 
 end
