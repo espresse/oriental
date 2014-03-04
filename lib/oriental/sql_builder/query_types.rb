@@ -117,23 +117,35 @@ module Oriental
     end
 
     def process_val(val)
-      val = val.to_s if val.is_a? Symbol or val.is_a? DateTime
+      val = val.to_s if val.is_a? Symbol
       # it'd be better if single quote (') was used iso double quote (")
       return "\"#{val}\"" if val.is_a? String
+      
       if val.is_a? Array
         res = []
         res = val.map {|v| process_val(v)}
         return "[" + res.join(', ') + "]"
       end
+      
       if val.is_a? Set
         res = []
         res = val.map {|v| process_val(v)}
         return "Set(" + res.join(', ') + ")"
       end
+      
       if val.is_a? Hash
         val = val.map {|k,v| "'#{k}':#{process_val(v)}"}
         return "{" + val.join(', ') + "}"
       end
+
+      if val.is_a?(DateTime) || val.is_a?(Time)
+        return "date('#{val.strftime('%Y-%m-%d %H:%M:%S')}', 'yyyy-MM-dd HH:mm:ss')"
+      end
+      
+      if val.is_a? Date
+        return "date('#{val.strftime('%Y-%m-%d')}', 'yyyy-MM-dd')"
+      end
+
       return val
     end
   end
