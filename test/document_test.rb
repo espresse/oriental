@@ -1,21 +1,36 @@
-# require File.expand_path '../test_helper.rb', __FILE__
+require File.expand_path '../test_helper.rb', __FILE__
 
-# include Rack::Test::Methods
+include Rack::Test::Methods
 
-# describe "Document" do
+describe "Document" do
 
-#   before do
-#     class U
+  before do
+    @user = User.new
+  end
 
-#       include Oriental::Document
-#       property dupa: String, default: "gola"
-#     end
+  describe "attributes" do
+    it "should include fields" do
+      assert_equal [:rid, :_klass, :_type, :username], User.fields.keys
+    end
+  end
 
-#     @user = U.new()
-#   end
+  describe 'basic attributes' do
+    it "should include username" do
+      assert @user.respond_to?(:username)
+    end
 
-#   it "should parse klass" do
-#     p @user
-#   end
+    it "should include klass" do
+      assert @user.respond_to?(:_klass)
+    end
 
-# end
+    it "should include type" do
+      assert @user.respond_to?(:_type)
+    end
+
+    it "should have dynamic fields" do
+      @user.dynamic_field(:dynamic_field, :dynamic)
+      assert @user.is_dynamic_field_dynamic?
+    end
+  end
+
+end

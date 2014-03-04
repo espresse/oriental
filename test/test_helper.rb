@@ -20,8 +20,13 @@ end
 server.db_create(TestHelper::TEST_DB[:db], 'document', TestHelper::TEST_DB[:storage])
 server.disconnect
 Oriental::Connection.connect(host: 'localhost', port: 2424, db: 'oriental-test', db_user: "admin", db_password: "admin", storage: "memory")
-  
+
 
 class OUser < Struct.new(:parameters)
 end
 
+class User
+  include Oriental::Document
+
+  field :username, type: String, default: "umm"
+end
