@@ -6,13 +6,13 @@ module Oriental
     include Inspector
 
     included do
-      include Oriental::Fields
+      include Fields
       attr_reader :fields
     end
 
     module ClassMethods
       def find(*args)
-        Oriental::Criteria.new(self).find(args)
+        Criteria.new(self).find(args)
       end
     end
 

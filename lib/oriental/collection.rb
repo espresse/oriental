@@ -34,7 +34,7 @@ module Oriental
     private
 
     def fetch_data
-      connection = Oriental::Connection.connect
+      connection = Connection.connect
 
       @data = command? ? connection.database.command(sql, params) : connection.database.query(sql, params, prefetch)
 
@@ -46,7 +46,7 @@ module Oriental
 
     def parse_record(record)
       res = OrientdbBinary::Parser::Deserializer.new.deserialize_document(record[:record_content])
-      res[:@rid] = Oriental::RecordId.new "##{record[:cluster_id]}:#{record[:position]}"
+      res[:@rid] = RecordId.new "##{record[:cluster_id]}:#{record[:position]}"
       res
     end
 

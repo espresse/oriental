@@ -4,7 +4,7 @@ module Oriental
 
     def find(obj)
       from obj
-      return take(1).first if obj.is_a? String or obj.is_a? Oriental::RecordId
+      return take(1).first if obj.is_a? String or obj.is_a? RecordId
       return to_a if obj.is_a? Array
     end
 
@@ -13,7 +13,7 @@ module Oriental
     end
 
     def from(obj)
-      if obj.is_a? String or obj.is_a? Oriental::RecordId
+      if obj.is_a? String or obj.is_a? RecordId
         criteria[:target] << obj
       else
         criteria[:target] |= obj

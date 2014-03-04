@@ -31,7 +31,7 @@ module Oriental
         set: [],
         params: {}
       }
-      @collection = Oriental::Collection.new
+      @collection = Collection.new
     end
 
     def to_sql
