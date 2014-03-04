@@ -17,7 +17,6 @@ module Oriental
     end
 
     def initialize(**record)
-      @_dynamic_fields = {}
       initialize_fields(record)
     end
 

@@ -48,13 +48,12 @@ module Oriental
     end
 
     def initialize_field(key, val)
-      unless self.class.fields[key]
-        dynamic_field(key, val)
-      end
+      dynamic_field(key, val) unless self.class.fields[key]
       self.send "#{key}=", val
     end
 
     def initialize_fields(record)
+      _dynamic_fields
       self.class.fields.each { |field| declare_field field }
       record.each { |key, val| initialize_field(key, val) }
     end

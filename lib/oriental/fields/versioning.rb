@@ -38,11 +38,8 @@ module Oriental
 
       def define_field_setter(field)
         define_method("#{field}=") do |val|
-          if @_dynamic_fields && @_dynamic_fields[field]
-            fld = @_dynamic_fields[field]
-          else
-            fld = self.class.fields[field]
-          end
+          fld = self.class.fields[field] ? self.class.fields[field] : @_dynamic_fields[field]
+
           val = coerce(val, fld)
 
           add_to_field_history field, val
