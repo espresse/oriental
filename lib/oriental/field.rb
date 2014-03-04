@@ -35,6 +35,15 @@ module Oriental
 
     private
 
+    def rename_reserved_words(field)
+      map = {
+        :@class => :_klass,
+        :@type => :_type,
+        :@rid => :rid
+      }
+      map[field] ? map[field] : field
+    end
+
     def declare_field(field)
       name = field.shift
       attrs = field.first
@@ -48,6 +57,8 @@ module Oriental
     end
 
     def initialize_field(key, val)
+      key = rename_reserved_words key
+
       dynamic_field(key, val) unless self.class.fields[key]
       self.send "#{key}=", val
     end

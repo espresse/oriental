@@ -22,7 +22,10 @@ server.disconnect
 Oriental::Connection.connect(host: 'localhost', port: 2424, db: 'oriental-test', db_user: "admin", db_password: "admin", storage: "memory")
 
 
-class OUser < Struct.new(:parameters)
+class OUser
+  include Oriental::Document
+
+  field :parameters, type: Hash
 end
 
 class User

@@ -10,7 +10,7 @@ describe "FIND statement" do
     end
 
     it "should return object" do
-      assert_equal Oriental::RecordId.new('#5:1'), @reader.parameters[:@rid]
+      assert_equal Oriental::RecordId.new('#5:1'), @reader.rid
     end
 
     it "should return array" do
@@ -24,7 +24,7 @@ describe "FIND statement" do
     end
 
     it "should return object" do
-      assert_equal Oriental::RecordId.new('#5:0'), @admin.parameters[:@rid]
+      assert_equal Oriental::RecordId.new('#5:0'), @admin.rid
     end
   end
 end
